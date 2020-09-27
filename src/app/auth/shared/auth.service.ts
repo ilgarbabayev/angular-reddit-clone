@@ -5,12 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { LoginRequestPayload } from '../login/login-request.payload';
 import { LoginResponse } from '../login/login-response.payload';
 import { LocalStorageService } from 'ngx-webstorage';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  refreshTokenPayload = {
+    refreshToken: this.getRefreshToken(),
+    username: this.getUserName()
+  };
 
   constructor(private http: HttpClient, private localStorage: LocalStorageService) { }
 
@@ -29,15 +34,15 @@ export class AuthService {
       }));
   }
 
-  refreshToken(): any {
-    const refreshTokenPayload = {
-      refreshToken: this.getRefreshToken(),
-      username: this.getUserName()
-    }
+  refreshToken(): Observable<any> {
     return this.http.post<LoginResponse>('http://localhost:8080/api/auth/refresh/token',
-      refreshTokenPayload)
-      .pipe(map(response => {
-        this.localStorage.store('authenticationToken', response.authenticationToken);
+      this.refreshTokenPayload)
+      .pipe(tap(response => {
+        this.localStorage.clear('authenticationToken');
+        this.localStorage.clear('expiresAt');
+
+        this.localStorage.store('authenticationToken',
+          response.authenticationToken);
         this.localStorage.store('expiresAt', response.expiresAt);
       }));
   }

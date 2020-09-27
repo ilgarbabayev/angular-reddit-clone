@@ -30,7 +30,7 @@ export class TokenInterceptor implements HttpInterceptor {
         }));
     }
 
-    private handleAuthErrors(req: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>> {
+    private handleAuthErrors(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.isTokenRefreshing) {
             this.isTokenRefreshing = true;
             this.refreshTokenSubject.next(null);
@@ -38,10 +38,11 @@ export class TokenInterceptor implements HttpInterceptor {
             return this.authService.refreshToken().pipe(
                 switchMap((refreshTokenResponse: LoginResponse) => {
                     this.isTokenRefreshing = false;
+                    console.log('refreshTokenResponse: ', refreshTokenResponse);
                     this.refreshTokenSubject.next(refreshTokenResponse.authenticationToken);
                     return next.handle(this.addToken(req, refreshTokenResponse.authenticationToken));
                 })
-            )
+            );
         }
     }
 
