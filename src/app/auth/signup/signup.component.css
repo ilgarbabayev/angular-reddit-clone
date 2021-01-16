@@ -1,3 +1,8 @@
 .register-section{
   margin: 100px;
 }
+
+.help-block{
+  font-size: 12px;
+  color: red;
+}
