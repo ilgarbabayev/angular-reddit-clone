@@ -17,6 +17,7 @@ import { PostTileComponent } from './shared/post-tile/post-tile.component';
 import { SideBarComponent } from './shared/side-bar/side-bar.component';
 import { SubredditSideBarComponent } from './shared/subreddit-side-bar/subreddit-side-bar.component';
 import { VoteButtonComponent } from './shared/vote-button/vote-button.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
