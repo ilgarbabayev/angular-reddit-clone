@@ -12,10 +12,15 @@ export class VoteButtonComponent implements OnInit {
   @Input() post: PostModel;
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;
+  upvoteColor = 'grey';
+  downvoteColor = 'grey';
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
+  upvotePost(): void {}
+  downvotePost(): void {}
 
 }
