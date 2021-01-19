@@ -15,11 +15,7 @@ export class PostTileComponent implements OnInit {
   @Input() posts: Array<PostModel>;
   faComments = faComments;
 
-  constructor(private postService: PostService, private router: Router) {
-    this.postService.getAllPosts().subscribe(post => {
-      this.posts = post;
-    });
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
   }
