@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   faUser = faUser;
   isLoggedIn: boolean;
   username: string;
@@ -25,6 +24,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/user-profile/' + this.username);
   }
 
-  logout() {}
-
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('').then(() => {
+      window.location.reload();
+    })
+  }
 }
